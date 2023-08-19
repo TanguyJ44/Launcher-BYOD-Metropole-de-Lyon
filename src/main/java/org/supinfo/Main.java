@@ -1,6 +1,7 @@
 package org.supinfo;
 
 import org.supinfo.installer.CheckInstall;
+import org.supinfo.terminal.Install;
 import org.supinfo.utils.Constants;
 import org.supinfo.virtualbox.VBoxManager;
 
@@ -21,7 +22,7 @@ public class Main {
                 System.exit(0);
             }
         } else {
-            // Démarrage en mode installation
+            Install.onStart();
         }
     }
 }

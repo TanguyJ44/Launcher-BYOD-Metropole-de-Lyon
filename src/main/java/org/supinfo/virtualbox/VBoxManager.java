@@ -8,9 +8,10 @@ import java.io.InputStreamReader;
 
 public class VBoxManager {
 
-    public static boolean healthCheck() {
+    public static boolean healthCheck(String... vboxManagePath) {
+        String path = vboxManagePath.length < 1 ? Constants.vboxManagePath : vboxManagePath[0];
         try {
-            Process process = Runtime.getRuntime().exec(Constants.vboxManagePath + " --version");
+            Process process = Runtime.getRuntime().exec(path + " --version");
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
             String line;
