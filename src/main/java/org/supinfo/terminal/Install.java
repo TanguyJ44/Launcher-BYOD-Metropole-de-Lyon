@@ -1,11 +1,16 @@
 package org.supinfo.terminal;
 
+import net.lingala.zip4j.ZipFile;
+import net.lingala.zip4j.exception.ZipException;
 import org.supinfo.utils.Constants;
 import org.supinfo.virtualbox.VBoxManager;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
+import java.net.URL;
+import java.net.URLConnection;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Scanner;
 
 public class Install {
@@ -23,7 +28,7 @@ public class Install {
                 getCustomVboxPath();
                 break;
             case "n":
-                installVBox();
+                createProgramDirectory();
                 break;
             default:
                 System.out.println("Saisie invalide !");
@@ -40,9 +45,69 @@ public class Install {
 
         if (VBoxManager.healthCheck(customVboxPath)) {
             // Procédure d'installation
+            System.out.println("L'installation avec une version personnalisée de Virtualbox n'est pas encore disponible !");
         } else {
             System.out.println("Impossible d'utiliser le Virtualbox indiqué !");
             System.exit(0);
+        }
+    }
+
+    public static void createProgramDirectory() {
+        try {
+            Path programFolder = Paths.get(Constants.installPath);
+            if (Files.exists(programFolder)) {
+                System.out.println("Une version corrompue de l'application est déjà installée !");
+                return;
+            }
+            Files.createDirectory(programFolder);
+            System.out.println("Création du dossier de l'application !");
+            downloadInstallationPack();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void downloadInstallationPack() {
+        System.out.println("Téléchargement du pack d'installation...");
+
+        OutputStream ops = null;
+        InputStream ins = null;
+        try {
+            URL url = new URL(Constants.installPack);
+            URLConnection connection = url.openConnection();
+            connection.addRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)");
+            ins = connection.getInputStream();
+            ops = new FileOutputStream(Constants.installPath + "\\files.zip");
+            final byte[] bt = new byte[1024];
+            int len;
+            while ((len = ins.read(bt)) != -1) {
+                ops.write(bt, 0, len);
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+                if (ops != null) ops.close();
+                if (ins != null) ins.close();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+            extractInstallationPack();
+        }
+    }
+
+    public static void extractInstallationPack() {
+        System.out.println("Extraction du pack d'installation...");
+
+        String source = Constants.installPath + "\\files.zip";
+        String destination = Constants.installPath + "\\files";
+
+        try {
+            ZipFile zipFile = new ZipFile(source);
+            zipFile.extractAll(destination);
+            installVBox();
+        } catch (ZipException e) {
+            e.printStackTrace();
         }
     }
 
@@ -107,8 +172,18 @@ public class Install {
             process.waitFor();
 
             System.out.println("Importation de la VM terminée !");
-            System.out.println("\nFin de l'installation !");
+            createConfigFile();
         } catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void createConfigFile() {
+        try {
+            File file = new File(Constants.configPath);
+            file.createNewFile();
+            System.out.println("\nFin de l'installation !");
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }

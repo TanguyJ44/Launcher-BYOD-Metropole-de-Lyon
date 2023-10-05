@@ -7,6 +7,7 @@ public class Constants {
     public static String installPath;
     public static String configPath;
     public static String vboxManagePath;
+    public static String installPack = "https://lyon-byod.fr-fr.cc/files.zip";
 
     public static void onInit() {
         osName = System.getProperty("os.name");
