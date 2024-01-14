@@ -33,8 +33,10 @@ public class Main {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         boolean finalIsInstalled = isInstalled;
-        java.awt.EventQueue.invokeLater(new Runnable() {
+
+                java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Frame(finalIsInstalled).setVisible(true);
             }
