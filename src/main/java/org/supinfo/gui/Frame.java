@@ -82,7 +82,7 @@ public class Frame extends javax.swing.JFrame {
         loadText.setBackground(new java.awt.Color(0, 0, 0));
         loadText.setFont(new java.awt.Font("Segoe UI Variable", 1, 24)); // NOI18N
         loadText.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        loadText.setText("<html><center>Chargement de votre environnement de travail profesionnel</center></html>");
+        loadText.setText("<html><center>Chargement de votre environnement de travail professionnel</center></html>");
 
         loadProgressBar.setForeground(new java.awt.Color(229, 0, 43));
         loadProgressBar.setFocusable(false);
@@ -140,7 +140,7 @@ public class Frame extends javax.swing.JFrame {
         labelTitleHome.setFont(new java.awt.Font("Segoe UI Variable", 1, 24)); // NOI18N
         labelTitleHome.setForeground(new java.awt.Color(0, 0, 0));
         labelTitleHome.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        labelTitleHome.setText("Bienvenue sur votre espace profesionnel");
+        labelTitleHome.setText("Bienvenue sur votre espace professionnel");
 
         labelSubtitleHome.setFont(new java.awt.Font("Segoe UI Variable", 0, 18)); // NOI18N
         labelSubtitleHome.setForeground(new java.awt.Color(0, 0, 0));

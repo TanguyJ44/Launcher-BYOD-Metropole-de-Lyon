@@ -80,7 +80,7 @@ public class Install extends SwingWorker<Boolean, Void> {
             ZipFile zipFile = new ZipFile(source);
             zipFile.extractAll(destination);
 
-            listener.taskStatus(TaskStatus.RUNNING, "Extraction des ressources terminée !\n");
+            listener.taskStatus(TaskStatus.RUNNING, "Extraction des ressources terminées !\n");
             return installVBox();
         } catch (ZipException e) {
             listener.taskStatus(TaskStatus.FAILED, "Erreur lors de l'extraction des ressources !\n");

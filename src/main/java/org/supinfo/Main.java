@@ -23,7 +23,7 @@ public class Main {
             if (VBoxManager.healthCheck()) {
                 isInstalled = true;
             } else {
-                System.out.println("Votre installation de VirtualBox semble corrompu !");
+                System.out.println("Votre installation de VirtualBox semble corrompue !");
                 System.exit(0);
             }
         }
